@@ -1,11 +1,9 @@
-﻿// constructor
-
-using System.Text.Json;
-using N36_C;
+﻿using N36_C;
 using N36_C.Services;
 
 #region MyRegion
 
+// constructor
 var userA = new User("Jonibek", "john.doe@example.com", "234234324");
 var userB = new User("Jonibek", "john.doe@example.com", "234234324");
 
@@ -53,7 +51,21 @@ valueTupleB.Age = 20;
 // deconstructing
 var (age, firstName) = valueTupleB;
 
-#endregion
+namespace N36_C
+{
+    #endregion
+
+    public interface ICoordination
+    {
+        public int PointX { get; set; }
+        public int PointY { get; set; }
+    }
+
+    public struct Coordination : ICoordination
+    {
+        public int PointX { get; set; }
+        public int PointY { get; set; }
+    }
 
 // public class User
 // {
@@ -83,3 +95,4 @@ var (age, firstName) = valueTupleB;
 //         return HashCode.Combine(Name, Email, Phone);
 //     }
 // }
+}

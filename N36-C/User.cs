@@ -11,7 +11,6 @@ public record FilterPagination(int PageToken, int PageSize)
 
 public record UserFilterModel(string Role) : FilterPagination(0, 0);
 
-
 // public record User()
 // {
 //     public string Name { get; init; }

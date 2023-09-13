@@ -2,7 +2,9 @@
 
 public class PerformanceReportService
 {
-    public async ValueTask<IEnumerable<(string FilePath, User User)>> InitializeEmployeeFileDataAsync(IEnumerable<User> users)
+    public async ValueTask<IEnumerable<(string FilePath, User User)>> InitializeEmployeeFileDataAsync(
+        IEnumerable<User> users
+    )
     {
         var path = Directory.GetCurrentDirectory();
 
