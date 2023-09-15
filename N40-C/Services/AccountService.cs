@@ -9,7 +9,10 @@ public class AccountService
 
     public ValueTask RegisterAsync(string emailAddress, string password)
     {
-        if(string.IsNullOrWhiteSpace(emailAddress))
-            throw new 
+        // invalid email address
+
+        // invalid password
+
+        // email address already exists
     }
 }
