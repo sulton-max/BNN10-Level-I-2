@@ -1,0 +1,1 @@
+﻿var path = @"D:\interview.txt";
