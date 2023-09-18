@@ -8,7 +8,6 @@ public class EmployeeService
 
     public Employee? GetByEmail(string emailAddress)
     {
-        Thread.Sleep(5000);
         return Employees.FirstOrDefault(employee => employee.EmailAddress == emailAddress);
     }
 

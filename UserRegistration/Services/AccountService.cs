@@ -22,6 +22,7 @@ public class AccountService
             // throw new DuplicateEntryException($"{nameof(Employee)} with this email address already exits.");
         }
 
+        Thread.Sleep(3000);
         var employee = new Employee
         {
             EmailAddress = emailAddress
