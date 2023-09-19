@@ -6,6 +6,7 @@ namespace UserRegistration.Services;
 public class AccountService
 {
     private readonly EmployeeService _employeeService;
+    private object _lock = new();
 
     public AccountService(EmployeeService employeeService)
     {
@@ -14,12 +15,15 @@ public class AccountService
 
     public ValueTask RegisterAsync(string emailAddress)
     {
-        var foundEmployee = _employeeService.GetByEmail(emailAddress);
-        if (foundEmployee is not null)
+        lock (_lock)
         {
-            Console.WriteLine("duplicate entry");
-            return new ValueTask(Task.CompletedTask);
-            // throw new DuplicateEntryException($"{nameof(Employee)} with this email address already exits.");
+            var foundEmployee = _employeeService.GetByEmail(emailAddress);
+            if (foundEmployee is not null)
+            {
+                Console.WriteLine("duplicate entry");
+                return new ValueTask(Task.CompletedTask);
+                // throw new DuplicateEntryException($"{nameof(Employee)} with this email address already exits.");
+            }
         }
 
         Thread.Sleep(3000);
