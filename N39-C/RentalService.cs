@@ -1,3 +1,5 @@
+namespace N39_C;
+
 public class RentalService
 {
     public void RentCar(Guid carId)

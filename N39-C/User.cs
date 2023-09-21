@@ -1,3 +1,5 @@
+namespace N39_C;
+
 public class User
 {
     public string FirstName { get; set; }

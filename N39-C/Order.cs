@@ -1,3 +1,5 @@
+namespace N39_C;
+
 public class Order
 {
     public string ProductName { get; set; }

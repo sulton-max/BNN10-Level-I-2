@@ -36,6 +36,7 @@
 
 // Type pattern
 using System.Linq.Expressions;
+using N39_C;
 
 object value = new User()
 {

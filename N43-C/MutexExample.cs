@@ -14,14 +14,7 @@ public static class MutexExample
             var fileStream = File.Open(filePath, FileMode.Open, FileAccess.ReadWrite);
             Console.WriteLine($"App {guid} opened the file");
 
-            Thread.Sleep(3000);
-
-            // while (fileStream.CanRead)
-            // {
-            //     var buffer = new byte[10];
-            //     fileStream.Read(buffer, 0, 10);
-            //     Console.WriteLine("Reading ... ");
-            // }
+            Thread.Sleep(10_000);
 
             fileStream.Close();
             Console.WriteLine($"App {guid} closed the file");
