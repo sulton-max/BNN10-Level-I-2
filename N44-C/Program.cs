@@ -1,3 +1,13 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using N44_C;
 
-Console.WriteLine("Hello, World!");
+// Cancellation
+// await CancellationExample.Execute();
+
+// Dead lock
+// await DeadLockExample.ExecuteAsync();
+
+// Linq
+// LinqExample.Execute();
+
+// Linq execution
+LinqExecutionExample.Execute();

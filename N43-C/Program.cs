@@ -6,8 +6,5 @@
 // Continuation
 // ContinuationExample.Execute();
 
-// Cancellation
-CancellationExample.Execute();
-
 // Dead lock
 // await DeadLockExample.ExecuteAsync();

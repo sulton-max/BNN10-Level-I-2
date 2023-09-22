@@ -11,7 +11,16 @@ public static class CancellationExample
         // CancellationToken - cancel qilinganini bildiruvchi obyekt/flag - bu threadlarga beriladi
 
         var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-        await DownloadAsync(cts.Token);
+
+        try
+        {
+            await DownloadAsync(cts.Token);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public static async ValueTask DownloadAsync(CancellationToken cancellationToken)
@@ -24,10 +33,14 @@ public static class CancellationExample
         for (var index = 0; index < 100; index++)
         {
             if (cancellationToken.IsCancellationRequested)
+            {
+                Console.WriteLine("Download canceled");
                 return;
+            }
 
-            Console.WriteLine("Creating a file ...");
-            await Task.Delay(100, cancellationToken);
+            Console.WriteLine("Downloading a file ...");
+
+            await Task.Delay(100, cancellationToken); // cancel qilish so'ralgan bo'lsa - exception qaytaradi
         }
     }
 }
