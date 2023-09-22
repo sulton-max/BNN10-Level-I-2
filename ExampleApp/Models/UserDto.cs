@@ -1,6 +1,4 @@
-using Example.Backend.Domain.Entities;
-
-namespace Example.Backend.Application.Accounts.Models;
+namespace ExampleApp.Models;
 
 public class UserDto
 {

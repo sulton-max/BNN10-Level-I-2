@@ -4,7 +4,8 @@ public static class LinqExecutionExample
 {
     public static void Execute()
     {
-        // Execution - LINQ ni bajarilish jarayoni
+        // Execution - queryni to'liq kolleksiya uchun qachon bajarilishi
+        // LINQ ni bajarilish jarayoni
 
         // 1. Deferred Execution
         // 2. Immediate Execution
@@ -36,7 +37,5 @@ public static class LinqExecutionExample
 
         // Lazy evaluation -
         // Eager evaluation -
-
-
     }
 }
