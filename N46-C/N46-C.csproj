@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <RootNamespace>N46_C</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <OutputType>exe</OutputType>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Event\" />
+    </ItemGroup>
+
+</Project>
