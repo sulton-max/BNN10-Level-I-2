@@ -6,8 +6,15 @@ namespace N46_C.Linq;
 
 public static class LinqReturnExample
 {
-    public static IQueryable<User> Get(Expression<Func<User, bool>> expression)
+    public static IEnumerable<User> Get(Expression<Func<User, bool>> expression)
     {
+        // Func<int>
+        // Func<bool>
+        // Predicate<
+
+        // Predicate<int>;
+
+
         var users = new List<User>();
         users.Add(new User
         {

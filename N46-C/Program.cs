@@ -1,5 +1,5 @@
-﻿using N46_C.Delegate;
-using N46_C.Linq;
+﻿using N46_C;
+using N46_C.Delegate;
 
 // var users = LinqReturnExample.Get(user => user.Age > 21).ToList();
 // users.ForEach(Console.WriteLine);
@@ -31,23 +31,25 @@ notifyUser += Notifier.SendSms;
 
 notifyUser("John");
 
-// foreach (var notifier in notifyUser.GetInvocationList())
+namespace N46_C
+{
+    // foreach (var notifier in notifyUser.GetInvocationList())
 //     notifier.DynamicInvoke("John");
 
-public static class Notifier
-{
-    public static ValueTask SendEmail(string user)
+    public static class Notifier
     {
-        Console.WriteLine("Sending email to {0}", user);
-        return new ValueTask();
-    }
+        public static ValueTask SendEmail(string user)
+        {
+            Console.WriteLine("Sending email to {0}", user);
+            return new ValueTask();
+        }
 
-    public static ValueTask SendSms(string user)
-    {
-        Console.WriteLine("Sending sms to {0}", user);
-        return new ValueTask();
+        public static ValueTask SendSms(string user)
+        {
+            Console.WriteLine("Sending sms to {0}", user);
+            return new ValueTask();
+        }
     }
-}
 
 
 
@@ -59,35 +61,36 @@ public static class Notifier
 // Action<T> - delegate void Method(TParamA paramA, TParamB, paramB)
 // Predicate<T> - delegate bool Method(TParamA paramA)
 
-public delegate bool ValidateContentDelegate(string content, bool result);
+    public delegate bool ValidateContentDelegate(string content, bool result);
 
-public class PostService
-{
-    public bool Create(string content, Predicate<string> validateMethod)
+    public class PostService
     {
-        if (!validateMethod(content))
-            throw new InvalidOperationException();
+        public bool Create(string content, Predicate<string> validateMethod)
+        {
+            if (!validateMethod(content))
+                throw new InvalidOperationException();
 
-        return true;
+            return true;
+        }
     }
-}
 
 
-public class Validator
-{
-    // Method
-    public bool Validate(string value)
+    public class Validator
     {
-        return string.IsNullOrWhiteSpace(value);
-    }
+        // Method
+        public bool Validate(string value)
+        {
+            return string.IsNullOrWhiteSpace(value);
+        }
     
-    public static bool ValidateEmail(string value)
-    {
-        return string.IsNullOrWhiteSpace(value);
-    }
+        public static bool ValidateEmail(string value)
+        {
+            return string.IsNullOrWhiteSpace(value);
+        }
 
-    public static int GetComplexWordCount(string content)
-    {
-        return 10;
+        public static int GetComplexWordCount(string content)
+        {
+            return 10;
+        }
     }
 }
