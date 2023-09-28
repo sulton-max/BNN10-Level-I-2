@@ -1,6 +1,13 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// service larni mana bu yerda registratsiya qilamiz
+// builder.Services.AddScoped<IService, Service>();
+
+// configuratsiya bu - business logikani to'g'ridan to'g'ri o'zgiratiradigan model
+// configuratsiayalrni mana shu orqali registratsiya qilamiz
+// builder.Configuration
+
+// Add services to the container
 
 // infrastructure configuration
 
