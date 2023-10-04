@@ -4,11 +4,12 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>N49_C.Monolith</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Max.FileBaseContext.Context" Version="0.0.5" />
-      <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+      <Folder Include="Models\Entities\" />
+      <Folder Include="Services\UsersService\" />
     </ItemGroup>
 
 </Project>

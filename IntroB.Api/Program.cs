@@ -20,7 +20,7 @@ builder.Services.AddScoped<IDataContext, AppFileContext>(provider =>
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
-builder.Services.AddControllers();
+// builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -30,6 +30,6 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.MapControllers();
+// app.MapControllers();
 
 await app.RunAsync();

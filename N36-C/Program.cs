@@ -61,11 +61,11 @@ namespace N36_C
         public int PointY { get; set; }
     }
 
-    public struct Coordination : ICoordination
-    {
-        public int PointX { get; set; }
-        public int PointY { get; set; }
-    }
+    // public struct Coordination : ICoordination
+    // {
+    //     public int PointX { get; set; }
+    //     public int PointY { get; set; }
+    // }
 
 // public class User
 // {
