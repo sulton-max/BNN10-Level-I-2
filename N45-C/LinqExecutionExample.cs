@@ -23,7 +23,7 @@ public static class LinqExecutionExample
             return x * 2;
         });
 
-        // info
+        // infof
         // metainfo
 
         // data

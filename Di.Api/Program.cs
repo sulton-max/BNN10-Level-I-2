@@ -28,7 +28,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 // class-class
 // builder.Services.AddScoped<UserService, EncryptedUserService>();
 
-// 2-usul tip va instance ni berish
+// 2-usul tip va instance ni berish - provide
 builder.Services.AddSingleton<IFileContextOptions<AppFileContext>>(_ =>
 {
     Console.WriteLine("FileContextOptions yaratildi");
