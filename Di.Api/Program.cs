@@ -48,6 +48,8 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// api/users
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
