@@ -6,6 +6,7 @@
 
 //
 
+using Delegates.Example;
 using Delegates.Example.Extensions;
 
 var usersA = new List<User>
@@ -54,6 +55,15 @@ var skillsB = new List<TalentSkill>
     new(Guid.Parse("859F84D8-B4A6-434B-8C67-58D8061497E5"), Guid.Parse("99E3BA84-B062-4132-A691-6EA6C720E3FB"), "JS", SkillLevel.Intermediate),
 };
 
+var oldPost = new object();
+var updatedPost = new object();
+
+// topics - string[]
+// Topic - Id, Name
+
+var intersectedTopics = oldPost.Topics.ZipIntersectBy(updatedPost.Topics, topic => topic.Id)
+
+
 // Talent - skill []
 
 // Post - topic []
@@ -75,44 +85,47 @@ foreach (var (previous, updatedSkill) in intersectedSkills)
 
 Console.WriteLine("Hello, World!");
 
-public class User
+namespace Delegates.Example
 {
-    public Guid Id { get; set; }
-
-    public string FirstName { get; set; } = string.Empty;
-
-    public string LastName { get; set; } = string.Empty;
-
-    public User(Guid id, string firstName, string lastName)
+    public class User
     {
-        Id = id;
-        FirstName = firstName;
-        LastName = lastName;
+        public Guid Id { get; set; }
+
+        public string FirstName { get; set; } = string.Empty;
+
+        public string LastName { get; set; } = string.Empty;
+
+        public User(Guid id, string firstName, string lastName)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+        }
     }
-}
 
-public enum SkillLevel
-{
-    Beginner,
-    Intermediate,
-    Advanced
-}
-
-public class TalentSkill
-{
-    public Guid Id { get; set; }
-
-    public Guid TalentId { get; set; }
-
-    public string SkillName { get; set; }
-
-    public SkillLevel SkillLevel { get; set; }
-
-    public TalentSkill(Guid id, Guid talentId, string skillName, SkillLevel skillLevel)
+    public enum SkillLevel
     {
-        Id = id;
-        TalentId = talentId;
-        SkillName = skillName;
-        SkillLevel = skillLevel;
+        Beginner,
+        Intermediate,
+        Advanced
+    }
+
+    public class TalentSkill
+    {
+        public Guid Id { get; set; }
+
+        public Guid TalentId { get; set; }
+
+        public string SkillName { get; set; }
+
+        public SkillLevel SkillLevel { get; set; }
+
+        public TalentSkill(Guid id, Guid talentId, string skillName, SkillLevel skillLevel)
+        {
+            Id = id;
+            TalentId = talentId;
+            SkillName = skillName;
+            SkillLevel = skillLevel;
+        }
     }
 }
