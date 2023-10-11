@@ -16,45 +16,53 @@ builder.Services.AddSingleton<AppFileContext>(_ =>
     var context = new AppFileContext(contextOptions);
     context.FetchAsync().AsTask().Wait();
 
-    context
-        .Users
-        .AddRangeAsync(new List<User>
-        {
-            new()
+    if (!context.Users.Any())
+        context
+            .Users
+            .AddRangeAsync(new List<User>
             {
-                UserName = "John"
-            },
-            new()
-            {
-                UserName = "Jane"
-            }
-        })
-        .AsTask()
-        .Wait();
+                new()
+                {
+                    UserName = "John"
+                },
+                new()
+                {
+                    UserName = "Jane"
+                }
+            })
+            .AsTask()
+            .Wait();
 
-    context.UserPreferences.AddRangeAsync(new List<UserPreference>
-    {
-        new()
-        {
-            UserId = context.Users.Skip(0).Take(1).Single().Id,
-            LikedTopics = new List<string>()
+    context.SaveChangesAsync().AsTask().Wait();
+
+    if (!context.UserPreferences.Any())
+        context
+            .UserPreferences
+            .AddRangeAsync(new List<UserPreference>
             {
-                "C#",
-                "ASP.NET Core",
-                "Blazor"
-            }
-        },
-        new()
-        {
-            UserId = context.Users.Skip(1).Take(1).Single().Id,
-            LikedTopics = new List<string>()
-            {
-                "Javascript",
-                "Frontend",
-                "React"
-            }
-        }
-    }).AsTask().Wait();
+                new()
+                {
+                    UserId = context.Users.Skip(0).Take(1).Single().Id,
+                    LikedTopics = new List<string>()
+                    {
+                        "C#",
+                        "ASP.NET Core",
+                        "Blazor"
+                    }
+                },
+                new()
+                {
+                    UserId = context.Users.Skip(1).Take(1).Single().Id,
+                    LikedTopics = new List<string>()
+                    {
+                        "Javascript",
+                        "Frontend",
+                        "React"
+                    }
+                }
+            })
+            .AsTask()
+            .Wait();
 
     context.SaveChangesAsync().AsTask().Wait();
 

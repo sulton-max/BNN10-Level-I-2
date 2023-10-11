@@ -22,7 +22,7 @@ public class DiscoveryService
     {
         var matchedUsersQuery = from preference in _userPreferenceService.Get(x => true)
             join user in _userService.Get(x => true) on preference.UserId equals user.Id
-            where preference.LikedTopics.Any(topic => post.Equals(post.Topic))
+            where preference.LikedTopics.Any(topic => post.Topic.Contains(topic))
             select user;
 
         var matchedUsers = matchedUsersQuery.ToList();
