@@ -1,6 +1,4 @@
-﻿using Training.FileExplorer.Application.FileStorage.Models.Storage;
-
-namespace FileExplorer.Api.Models;
+﻿namespace FileExplorer.Api.Models;
 
 public class StorageDirectory : IStorageEntry
 {

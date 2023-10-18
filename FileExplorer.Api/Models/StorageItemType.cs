@@ -1,4 +1,4 @@
-﻿namespace Training.FileExplorer.Application.FileStorage.Models.Storage;
+﻿namespace FileExplorer.Api.Models;
 
 public enum StorageItemType
 {
