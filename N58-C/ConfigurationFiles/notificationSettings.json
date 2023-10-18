@@ -1,0 +1,9 @@
+{
+    "EmailSenderSettings": {
+        "Host": "smtp.gmail.com",
+        "Port": 587,
+        "CredentialAddress": "sultonbek.rakhimov.recovery@gmail.com",
+        "Password": "szabguksrhwsbtie",
+        "SenderEmailAddress": "sultonbek.rakhimov.recovery@gmail.com"
+    }
+}

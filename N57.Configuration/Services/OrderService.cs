@@ -10,19 +10,14 @@ public class OrderService
     private readonly OrderSettings _orderSettings;
     private readonly List<Order> _orders = new();
 
-    public OrderService(BonusService bonusService, OrderSettings orderSettings)
+    public OrderService(BonusService bonusService, IOptions<OrderSettings> orderSettings)
     {
         _bonusService = bonusService;
-        _orderSettings = orderSettings;
+        _orderSettings = orderSettings.Value;
     }
 
     public ValueTask AddOrder(Order order)
     {
-        while (true)
-        {
-            _orderSettings.Value
-        }
-
         _orders.Add(order);
 
         if (order.OrderAmount > 100)
