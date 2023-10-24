@@ -1,9 +1,9 @@
 ﻿using System.Net;
 using System.Net.Mail;
 using Microsoft.Extensions.Options;
-using N58_C.Models.Settings;
+using N60.Api.Models.Settings;
 
-namespace N58_C.Service;
+namespace N60.Api.Service;
 
 // INotificationService
 

@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using N58_C.Models.Settings;
-using N58_C.Service;
+using N60.Api.Models.Settings;
+using N60.Api.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 

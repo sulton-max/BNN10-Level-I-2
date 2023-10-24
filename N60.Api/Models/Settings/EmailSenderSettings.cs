@@ -1,4 +1,4 @@
-﻿namespace N58_C.Models.Settings;
+﻿namespace N60.Api.Models.Settings;
 
 public class EmailSenderSettings
 {
