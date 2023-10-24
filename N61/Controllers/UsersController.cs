@@ -23,10 +23,6 @@ public class UsersController : ControllerBase
     [HttpGet("{userId:guid}")]
     public IActionResult Get([FromRoute] Guid userId)
     {
-        var result = new IdentityResult();
-        result.Errors
-
-
         var user = null as User;
         return user != null ? Ok(user) : NotFound();
     }
