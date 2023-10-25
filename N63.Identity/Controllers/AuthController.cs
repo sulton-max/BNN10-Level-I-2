@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using N63.Identity.Models.Dtos;
-using N63.Identity.Models.Entities;
 using N63.Identity.Service;
 
 namespace N63.Identity.Controllers;
@@ -19,6 +19,8 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegistrationDetails registrationDetails)
     {
+        // Request.Headers.Authorization
+
         var result = await _authService.RegisterAsync(registrationDetails);
         return Ok(result);
     }

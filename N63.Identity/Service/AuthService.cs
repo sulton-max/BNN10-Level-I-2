@@ -1,6 +1,8 @@
 ﻿using System.Security.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using N63.Identity.Models.Dtos;
 using N63.Identity.Models.Entities;
+using BC = BCrypt.Net.BCrypt;
 
 namespace N63.Identity.Service;
 
