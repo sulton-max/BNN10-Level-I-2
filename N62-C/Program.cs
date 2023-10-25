@@ -29,25 +29,27 @@ app.Use(async (context, next) =>
 });
 
 // custom middleware - requestni validatsiya qilish, path to'g'ri kelsa o'zi javob berish yoki keyingi middleware componentga uzatish
-// app.Use(async (context, next) =>
-// {
-//     Console.WriteLine($"Intercepting request {context.Request.Path.ToString()}");
-//
-//     if (string.IsNullOrWhiteSpace(context.Request.Headers.Authorization.ToString()))
-//     {
-//         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-//         await context.Response.WriteAsync("Userni bejiki yo'q ekan");
-//         return;
-//     }
-//
-//     if (context.Request.Path == "/hello")
-//         await context.Response.WriteAsync("No endpoint found");
-//     else
-//         await next();
-// });
+
 
 // app.MapControllers();
 app.MapGet("/", () => Results.Ok("Hello World!"));
+
+app.Use(async (context, next) =>
+{
+    Console.WriteLine($"Intercepting request {context.Request.Path.ToString()}");
+
+    if (string.IsNullOrWhiteSpace(context.Request.Headers.Authorization.ToString()))
+    {
+        context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+        await context.Response.WriteAsync("Userni bejiki yo'q ekan");
+        return;
+    }
+
+    if (context.Request.Path == "/hello")
+        await context.Response.WriteAsync("No endpoint found");
+    else
+        await next();
+});
 
 // Func<HttpContext, RequestDelegate, Task
 // custom middleware - vazifasi biror middleware requestni qabul qilmasa mana shu middleware qabul qiladi

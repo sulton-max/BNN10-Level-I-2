@@ -8,3 +8,10 @@
 2023-10-24 16:17:35Z request path - / with method GET from IP address ::1
 2023-10-24 16:36:20Z request path - / with method GET from IP address ::1
 2023-10-24 16:36:43Z request path - / with method GET from IP address ::1
+2023-10-25 08:40:00Z request path - / with method GET from IP address ::1
+2023-10-25 14:54:09Z request path - / with method GET from IP address ::1
+2023-10-25 14:54:14Z request path - /favicon.ico with method GET from IP address ::1
+2023-10-25 14:54:52Z request path - / with method GET from IP address 127.0.0.1
+2023-10-25 14:55:04Z request path - / with method GET from IP address 127.0.0.1
+2023-10-25 14:55:06Z request path - /favicon.ico with method GET from IP address 127.0.0.1
+2023-10-25 14:55:07Z request path - /favicon.ico with method GET from IP address 127.0.0.1
