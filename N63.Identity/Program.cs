@@ -1,8 +1,8 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using N63.Identity.Models.Settings;
 using N63.Identity.Service;
+using N63.Identity.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,9 +1,7 @@
-﻿namespace N63.Identity.Models.Entities;
+﻿namespace N64.Identity.Application.Common.Identity.Models;
 
-public class User
+public class RegistrationDetails
 {
-    public Guid Id { get; set; }
-
     public string FirstName { get; set; } = default!;
 
     public string LastName { get; set; } = default!;

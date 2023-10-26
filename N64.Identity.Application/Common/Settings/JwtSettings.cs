@@ -1,4 +1,4 @@
-﻿namespace N63.Identity.Models.Settings;
+﻿namespace N64.Identity.Application.Common.Settings;
 
 public class JwtSettings
 {

@@ -3,16 +3,16 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using N63.Identity.Constants;
-using N63.Identity.Models.Entities;
-using N63.Identity.Settings;
+using N64.Identity.Application.Common.Constants;
+using N64.Identity.Application.Common.Identity.Services;
+using N64.Identity.Application.Common.Settings;
+using N64.Identity.Domain.Entities;
 
-namespace N63.Identity.Service;
+namespace N64.Identity.Infrastructure.Common.Identity.Services;
 
-public class TokenGeneratorService
+public class TokenGeneratorService : ITokenGeneratorService
 {
     private readonly JwtSettings _jwtSettings;
-    public string SecretKey = "8E6225FC-6E84-4E50-805F-FB3B5B6138BE";
 
     public TokenGeneratorService(IOptions<JwtSettings> jwtSettings)
     {
