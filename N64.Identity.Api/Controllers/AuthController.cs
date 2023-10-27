@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using N64.Identity.Application.Common.Identity.Models;
 using N64.Identity.Application.Common.Identity.Services;
 

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.DataProtection;
 using N64.Identity.Api.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
