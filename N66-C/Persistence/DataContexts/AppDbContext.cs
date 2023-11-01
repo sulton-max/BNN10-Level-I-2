@@ -22,6 +22,9 @@ public class AppDbContext : DbContext
         // Server=localhost;Database=MyFirstEfCoreApp;User=postgres;Password=postgres - sql server
         // Host=localhost;Port=5432;Database=MyFirstEfCoreApp;Username=postgres;Password=postgres - postgres
         base.OnConfiguring(optionsBuilder);
+
+        // optionsBuilder.
+
         optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=MyFirstEfCoreApp;Username=postgres;Password=postgres");
     }
 
@@ -35,6 +38,5 @@ public class AppDbContext : DbContext
         // one-to-many relationship
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Book>().HasOne(book => book.Author).WithMany();
-
     }
 }

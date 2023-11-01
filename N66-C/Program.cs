@@ -48,7 +48,27 @@ if (appDbContext.Authors.Any() && !appDbContext.Books.Any())
 }
 
 // Read Data
-var allBooks = await appDbContext.Books
-    .Include(book => book.Author)
-    .ToListAsync();
-Console.WriteLine(JsonSerializer.Serialize(allBooks));
+
+
+var sameBookA = await appDbContext.Books.FirstAsync(book => book.Id.Equals(Guid.Parse("393f9c34-10fa-4184-84bc-73eb55b339bf")));
+sameBookA.Title = "Test update";
+appDbContext.Update(sameBookA);
+
+var sameBookB = await appDbContext.Books.FirstAsync(book => book.Id.Equals(Guid.Parse("393f9c34-10fa-4184-84bc-73eb55b339bf")));
+
+// var allBooks = await appDbContext.Books
+//     .Include(book => book.Author)
+//     .ToListAsync();
+
+Console.ReadLine();
+
+// CRUD
+// Console.WriteLine(allBooks);
+
+
+// book and author entity
+// book and author service
+// book and author validation
+// book and author controller
+// seed data
+// configuration
