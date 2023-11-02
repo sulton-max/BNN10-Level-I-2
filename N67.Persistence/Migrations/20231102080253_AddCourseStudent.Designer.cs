@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace N67.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231101172320_AddStudentCourse")]
-    partial class AddStudentCourse
+    [Migration("20231102080253_AddCourseStudent")]
+    partial class AddCourseStudent
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,31 +24,6 @@ namespace N67.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("CourseUser", b =>
-                {
-                    b.Property<Guid>("StudentCoursesId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("StudentsId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("CourseId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("StudentId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("StudentCoursesId", "StudentsId");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("StudentId");
-
-                    b.HasIndex("StudentsId");
-
-                    b.ToTable("CourseStudents", (string)null);
-                });
 
             modelBuilder.Entity("N67.Domain.Entities.Course", b =>
                 {
@@ -70,7 +45,22 @@ namespace N67.Persistence.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("Course");
+                    b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("N67.Domain.Entities.CourseStudent", b =>
+                {
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("CourseId", "StudentId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentCourses");
                 });
 
             modelBuilder.Entity("N67.Domain.Entities.User", b =>
@@ -94,29 +84,6 @@ namespace N67.Persistence.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("CourseUser", b =>
-                {
-                    b.HasOne("N67.Domain.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("CourseId");
-
-                    b.HasOne("N67.Domain.Entities.Course", null)
-                        .WithMany()
-                        .HasForeignKey("StudentCoursesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("N67.Domain.Entities.Course", null)
-                        .WithMany()
-                        .HasForeignKey("StudentId");
-
-                    b.HasOne("N67.Domain.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("StudentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("N67.Domain.Entities.Course", b =>
                 {
                     b.HasOne("N67.Domain.Entities.User", "Teacher")
@@ -128,8 +95,34 @@ namespace N67.Persistence.Migrations
                     b.Navigation("Teacher");
                 });
 
+            modelBuilder.Entity("N67.Domain.Entities.CourseStudent", b =>
+                {
+                    b.HasOne("N67.Domain.Entities.Course", "Course")
+                        .WithMany("CourseStudents")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("N67.Domain.Entities.User", "Student")
+                        .WithMany("CourseStudents")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("N67.Domain.Entities.Course", b =>
+                {
+                    b.Navigation("CourseStudents");
+                });
+
             modelBuilder.Entity("N67.Domain.Entities.User", b =>
                 {
+                    b.Navigation("CourseStudents");
+
                     b.Navigation("TeacherCourses");
                 });
 #pragma warning restore 612, 618

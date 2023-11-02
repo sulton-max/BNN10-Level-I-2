@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace N67.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231101164825_AddCourse")]
+    [Migration("20231102080107_AddCourse")]
     partial class AddCourse
     {
         /// <inheritdoc />
@@ -45,7 +45,7 @@ namespace N67.Persistence.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("Course");
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("N67.Domain.Entities.User", b =>

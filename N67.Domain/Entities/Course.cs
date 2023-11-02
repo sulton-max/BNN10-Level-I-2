@@ -12,5 +12,5 @@ public class Course
     
     public virtual User Teacher { get; set; }
      
-    public virtual ICollection<User> Students { get; set; }
-}
+    public virtual ICollection<CourseStudent> CourseStudents { get; set; }
+ }

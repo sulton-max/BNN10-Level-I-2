@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace N67.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231031173614_AddUser")]
+    [Migration("20231102075033_AddUser")]
     partial class AddUser
     {
         /// <inheritdoc />
@@ -33,13 +33,11 @@ namespace N67.Persistence.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
