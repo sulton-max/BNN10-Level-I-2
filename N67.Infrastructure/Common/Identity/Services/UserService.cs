@@ -24,6 +24,7 @@ public class UserService : IUserService
 
     public async ValueTask<User> CreateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
+        user.Id = Guid.Empty;
         await _appDbContext.Users.AddAsync(user, cancellationToken);
 
         if (saveChanges)
@@ -34,6 +35,9 @@ public class UserService : IUserService
 
     public async ValueTask<User> UpdateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
+        var foundUser = _appDbContext.Users.FirstOrDefault(dbUser => dbUser.Id == user.Id);
+        
+        
         _appDbContext.Users.Update(user);
 
         if (saveChanges)
