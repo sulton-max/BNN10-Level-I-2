@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using N67.Persistence.DataContexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace N67.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231102154757_AddRole")]
+    partial class AddRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,51 +63,6 @@ namespace N67.Persistence.Migrations
                     b.ToTable("StudentCourses");
                 });
 
-            modelBuilder.Entity("N67.Domain.Entities.Location", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("ParentId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParentId");
-
-                    b.ToTable("Locations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("77589501-22b7-4fa2-9436-534c0c46913e"),
-                            Name = "Uzbekistan",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("33517080-5e99-4591-b85d-2ed1ebf3bd98"),
-                            Name = "Tashkent",
-                            ParentId = new Guid("77589501-22b7-4fa2-9436-534c0c46913e"),
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = new Guid("5eccba7f-4361-4ee6-832f-35ab309786cd"),
-                            Name = "Navoiy",
-                            ParentId = new Guid("77589501-22b7-4fa2-9436-534c0c46913e"),
-                            Type = 1
-                        });
-                });
-
             modelBuilder.Entity("N67.Domain.Entities.Role", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -116,7 +74,7 @@ namespace N67.Persistence.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("N67.Domain.Entities.User", b =>
@@ -170,15 +128,6 @@ namespace N67.Persistence.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("N67.Domain.Entities.Location", b =>
-                {
-                    b.HasOne("N67.Domain.Entities.Location", "ParentLocation")
-                        .WithMany("ChildrenLocations")
-                        .HasForeignKey("ParentId");
-
-                    b.Navigation("ParentLocation");
-                });
-
             modelBuilder.Entity("N67.Domain.Entities.Role", b =>
                 {
                     b.HasOne("N67.Domain.Entities.User", null)
@@ -191,11 +140,6 @@ namespace N67.Persistence.Migrations
             modelBuilder.Entity("N67.Domain.Entities.Course", b =>
                 {
                     b.Navigation("CourseStudents");
-                });
-
-            modelBuilder.Entity("N67.Domain.Entities.Location", b =>
-                {
-                    b.Navigation("ChildrenLocations");
                 });
 
             modelBuilder.Entity("N67.Domain.Entities.User", b =>

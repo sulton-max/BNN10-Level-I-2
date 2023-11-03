@@ -7,6 +7,7 @@ public static partial class HostConfiguration
         builder
             .AddPersistence()
             .AddIdentityInfrastructure()
+            .AddCourseInfrastructure()
             .AddDevTools()
             .AddExposers();
 

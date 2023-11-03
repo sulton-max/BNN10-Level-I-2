@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using N67.Persistence.DataContexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace N67.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231102162654_AddLocation")]
+    partial class AddLocation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,28 +84,6 @@ namespace N67.Persistence.Migrations
                     b.HasIndex("ParentId");
 
                     b.ToTable("Locations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("77589501-22b7-4fa2-9436-534c0c46913e"),
-                            Name = "Uzbekistan",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("33517080-5e99-4591-b85d-2ed1ebf3bd98"),
-                            Name = "Tashkent",
-                            ParentId = new Guid("77589501-22b7-4fa2-9436-534c0c46913e"),
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = new Guid("5eccba7f-4361-4ee6-832f-35ab309786cd"),
-                            Name = "Navoiy",
-                            ParentId = new Guid("77589501-22b7-4fa2-9436-534c0c46913e"),
-                            Type = 1
-                        });
                 });
 
             modelBuilder.Entity("N67.Domain.Entities.Role", b =>

@@ -6,11 +6,15 @@ namespace N67.Persistence.DataContexts;
 
 public class AppDbContext : DbContext
 {
-    public DbSet<User> Users { get; set; }
+    public DbSet<User> Users => Set<User>();
     
-    public DbSet<Course> Courses { get; set; }
+    public DbSet<Course> Courses => Set<Course>();
     
-    public DbSet<CourseStudent> StudentCourses { get; set; }
+    public DbSet<CourseStudent> StudentCourses => Set<CourseStudent>();
+    
+    public DbSet<Role> Roles => Set<Role>();
+
+    public DbSet<Location> Locations => Set<Location>();
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
