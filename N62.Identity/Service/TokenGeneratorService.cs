@@ -2,8 +2,7 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using N62.Identity.Constants;
-using N62.Identity.Models.Entities;
+using N64.
 
 namespace N62.Identity.Service;
 
@@ -38,6 +37,7 @@ public class TokenGeneratorService
         return new List<Claim>()
         {
             new(ClaimTypes.Email, user.EmailAddress),
+            new (ClaimTypes.Role, user.)
             new(ClaimConstants.UserId, user.Id.ToString())
         };
     }

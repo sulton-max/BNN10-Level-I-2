@@ -47,6 +47,7 @@ public class TokenGeneratorService : ITokenGeneratorService
         return new List<Claim>()
         {
             new(ClaimTypes.Email, user.EmailAddress),
+            new (ClaimTypes.Role, user.Role.Type.ToString()),
             new(ClaimConstants.UserId, user.Id.ToString())
         };
     }
