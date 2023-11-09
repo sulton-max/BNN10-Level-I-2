@@ -1,4 +1,5 @@
-﻿using N64.Identity.Application.Common.Identity.Services;
+﻿using Microsoft.EntityFrameworkCore;
+using N64.Identity.Application.Common.Identity.Services;
 using N64.Identity.Domain.Entities;
 using N64.Identity.Persistence.Repositories.Interfaces;
 
@@ -13,13 +14,30 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public ValueTask<User?> GetByIdAsync(Guid userId)
+    public ValueTask<User?> GetByIdAsync(Guid userId, bool asNoTracking = false, CancellationToken cancellationToken = default)
     {
-        return _userRepository.GetByIdAsync(userId);
+        return _userRepository.GetByIdAsync(userId, asNoTracking, cancellationToken);
     }
 
-    public ValueTask<User> UpdateAsync(User user)
+    public async ValueTask<User?> GetByEmailAddressAsync(
+        string emailAddress,
+        bool asNoTracking = false,
+        CancellationToken cancellationToken = default
+    )
     {
-        return _userRepository.UpdateAsync(user);
+        return await _userRepository
+            .Get(asNoTracking: asNoTracking)
+            .Include(user => user.Role)
+            .SingleOrDefaultAsync(user => user.EmailAddress == emailAddress, cancellationToken: cancellationToken);
+    }
+
+    public ValueTask<User> CreateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
+    {
+        return _userRepository.CreateAsync(user, saveChanges, cancellationToken);
+    }
+
+    public ValueTask<User> UpdateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
+    {
+        return _userRepository.UpdateAsync(user, saveChanges, cancellationToken);
     }
 }

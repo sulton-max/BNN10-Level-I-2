@@ -16,7 +16,7 @@ public class AccountController : ControllerBase
 
     [HttpPut("verification/{token}")]
     public async ValueTask<IActionResult> VerificateAsync([FromRoute] string token)
-    {
+    {   
         var result = await _accountService.VerificateAsync(token);
         return Ok(result);
     }

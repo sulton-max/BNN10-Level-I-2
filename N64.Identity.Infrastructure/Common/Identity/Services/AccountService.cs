@@ -7,20 +7,22 @@ namespace N64.Identity.Infrastructure.Common.Identity.Services;
 
 public class AccountService : IAccountService
 {
-    public static readonly List<User> _users = new();
-
     private readonly IVerificationTokenGeneratorService _verificationTokenGeneratorService;
     private readonly IEmailOrchestrationService _emailOrchestrationService;
+    private readonly IUserService _userService;
 
-    public AccountService(IVerificationTokenGeneratorService verificationTokenGeneratorService, IEmailOrchestrationService emailOrchestrationService)
+    public AccountService(
+        IVerificationTokenGeneratorService verificationTokenGeneratorService,
+        IEmailOrchestrationService emailOrchestrationService,
+        IUserService userService
+    )
     {
         _verificationTokenGeneratorService = verificationTokenGeneratorService;
         _emailOrchestrationService = emailOrchestrationService;
+        _userService = userService;
     }
 
-    public List<User> Users => _users;
-
-    public ValueTask<bool> VerificateAsync(string token)
+    public ValueTask<bool> VerificateAsync(string token, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(token))
             throw new ArgumentException("Invalid verification token", nameof(token));
@@ -39,21 +41,26 @@ public class AccountService : IAccountService
         return result;
     }
 
-    public ValueTask<User> CreateUserAsync(User user)
+    public async ValueTask<bool> CreateUserAsync(User user, CancellationToken cancellationToken = default)
     {
-        _users.Add(user);
+        var createdUser = await _userService.CreateAsync(user, true, cancellationToken);
 
-        var emailVerificationToken = _verificationTokenGeneratorService.GenerateToken(VerificationType.EmailAddressVerification, user.Id);
-        _emailOrchestrationService.SendAsync(user.EmailAddress, emailVerificationToken);
+        var verificationToken =
+            _verificationTokenGeneratorService.GenerateToken(VerificationType.EmailAddressVerification, createdUser.Id);
 
-        return new(user);
+        var verificationEmailResult = await _emailOrchestrationService.SendAsync(createdUser.EmailAddress,
+            $"Sistemaga xush kelibsiz - {verificationToken}");
+
+        var result = verificationEmailResult; 
+
+        return result;
     }
 
     public ValueTask<bool> MarkEmailAsVerifiedAsync(Guid userId)
     {
-        var foundUser = _users.FirstOrDefault(user => user.Id == userId) ?? throw new InvalidOperationException();
+        // var foundUser = _users.FirstOrDefault(user => user.Id == userId) ?? throw new InvalidOperationException();
 
-        foundUser.IsEmailAddressVerified = true;
+        // foundUser.IsEmailAddressVerified = true;
 
         return new(true);
     }

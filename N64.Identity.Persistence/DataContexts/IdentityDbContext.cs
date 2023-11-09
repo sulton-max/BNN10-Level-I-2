@@ -8,14 +8,11 @@ public class IdentityDbContext : DbContext
     public DbSet<User> Users => Set<User>();
 
     public DbSet<Role> Roles => Set<Role>();
+    
+    public DbSet<AccessToken> AccessTokens => Set<AccessToken>();
 
     public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options)
     {
-        var users = Users.ToList();
-
-        // var user = new User();
-
-        // Users.Add(user);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

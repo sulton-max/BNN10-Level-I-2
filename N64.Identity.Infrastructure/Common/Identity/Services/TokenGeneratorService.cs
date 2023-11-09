@@ -23,6 +23,8 @@ public class TokenGeneratorService : ITokenGeneratorService
     {
         var jwtToken = GetJwtToken(user);
         var token = new JwtSecurityTokenHandler().WriteToken(jwtToken);
+        var test = new JwtSecurityTokenHandler();
+
         return token;
     }
 

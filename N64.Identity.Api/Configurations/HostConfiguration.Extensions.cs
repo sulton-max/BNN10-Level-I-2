@@ -1,5 +1,7 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using N64.Identity.Application.Common.Identity.Services;
@@ -16,6 +18,13 @@ namespace N64.Identity.Api.Configurations;
 
 public static partial class HostConfiguration
 {
+    private static WebApplicationBuilder AddHttpContextProvider(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddHttpContextAccessor();
+
+        return builder;
+    }
+
     private static WebApplicationBuilder AddPersistence(this WebApplicationBuilder builder)
     {
         builder.Services.AddDbContext<IdentityDbContext>(options =>
@@ -27,7 +36,8 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddIdentityInfrastructure(this WebApplicationBuilder builder)
     {
         builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(JwtSettings)));
-        builder.Services.Configure<VerificationTokenSettings>(builder.Configuration.GetSection(nameof(VerificationTokenSettings)));
+        builder.Services.Configure<VerificationTokenSettings>(
+            builder.Configuration.GetSection(nameof(VerificationTokenSettings)));
 
         builder.Services.AddDataProtection();
 
@@ -35,14 +45,15 @@ public static partial class HostConfiguration
             .AddTransient<IPasswordHasherService, PasswordHasherService>()
             .AddTransient<IVerificationTokenGeneratorService, VerificationTokenGeneratorService>();
 
-        builder.Services
-            .AddScoped<IUserRepository, UserRepository>()
-            .AddScoped<IRoleRepository, RoleRepository>();
+        builder.Services.AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IRoleRepository, RoleRepository>()
+            .AddScoped<IAccessTokenRepository, AccessTokenRepository>();
 
         builder.Services.AddScoped<IAccountService, AccountService>()
             .AddScoped<IAuthService, AuthService>()
             .AddScoped<IUserService, UserService>()
-            .AddScoped<IRoleService, RoleService>();
+            .AddScoped<IRoleService, RoleService>()
+            .AddScoped<IAccessTokenService, AccessTokenService>();
 
         var jwtSettings = new JwtSettings();
         builder.Configuration.GetSection(nameof(JwtSettings)).Bind(jwtSettings);

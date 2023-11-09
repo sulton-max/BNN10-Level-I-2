@@ -5,8 +5,9 @@ using N64.Identity.Persistence.Repositories.Interfaces;
 
 namespace N64.Identity.Persistence.Repositories;
 
-public abstract class EntityRepositoryBase<TEntity> : IEntityRepositoryBase<TEntity> where TEntity : class, IEntity
+public abstract class EntityRepositoryBase<TEntity, TContext> where TEntity : class, IEntity where TContext : DbContext
 {
+    protected TContext DbContext => (TContext)_dbContext;
     private readonly DbContext _dbContext;
 
     protected EntityRepositoryBase(DbContext dbContext)
@@ -14,9 +15,9 @@ public abstract class EntityRepositoryBase<TEntity> : IEntityRepositoryBase<TEnt
         _dbContext = dbContext;
     }
 
-    public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>>? predicate, bool asNoTracking = true)
+    public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>>? predicate = default, bool asNoTracking = false)
     {
-        var initialQuery = _dbContext.Set<TEntity>().Where(entity => true);
+        var initialQuery = DbContext.Set<TEntity>().Where(entity => true);
 
         if (predicate is not null)
             initialQuery = initialQuery.Where(predicate);
@@ -27,20 +28,29 @@ public abstract class EntityRepositoryBase<TEntity> : IEntityRepositoryBase<TEnt
         return initialQuery;
     }
 
-    public ValueTask<TEntity?> GetByIdAsync(Guid id, bool asNoTracking = true, CancellationToken cancellationToken = default)
+    public async ValueTask<TEntity?> GetByIdAsync(
+        Guid id,
+        bool asNoTracking = false,
+        CancellationToken cancellationToken = default
+    )
     {
-        return _dbContext.Set<TEntity>().FindAsync(new object[] {id}, cancellationToken: cancellationToken);
-        
-        return new(_dbContext.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(entity => entity.Id == id, cancellationToken: cancellationToken));
+        // TODO : use single or default for no tracking case, find for tracking case
+
+        var initialQuery = DbContext.Set<TEntity>().Where(entity => true);
+
+        if (asNoTracking)
+            initialQuery = initialQuery.AsNoTracking();
+
+        return await initialQuery.SingleOrDefaultAsync(entity => entity.Id == id, cancellationToken: cancellationToken);
     }
 
     public async ValueTask<IList<TEntity>> GetByIdsAsync(
         IEnumerable<Guid> ids,
-        bool asNoTracking = true,
+        bool asNoTracking = false,
         CancellationToken cancellationToken = default
     )
     {
-        var initialQuery = _dbContext.Set<TEntity>().Where(entity => true);
+        var initialQuery = DbContext.Set<TEntity>().Where(entity => true);
 
         if (asNoTracking)
             initialQuery = initialQuery.AsNoTracking();
@@ -50,46 +60,72 @@ public abstract class EntityRepositoryBase<TEntity> : IEntityRepositoryBase<TEnt
         return await initialQuery.ToListAsync(cancellationToken: cancellationToken);
     }
 
-    public async ValueTask<TEntity> CreateAsync(TEntity entity, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<TEntity> CreateAsync(
+        TEntity entity,
+        bool saveChanges = true,
+        CancellationToken cancellationToken = default
+    )
     {
-        await _dbContext.Set<TEntity>().AddAsync(entity, cancellationToken);
+        await DbContext.Set<TEntity>().AddAsync(entity, cancellationToken);
 
         if (saveChanges)
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            await DbContext.SaveChangesAsync(cancellationToken);
 
         return entity;
     }
 
-    public async ValueTask<TEntity> UpdateAsync(TEntity entity, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<TEntity> UpdateAsync(
+        TEntity entity,
+        bool saveChanges = true,
+        CancellationToken cancellationToken = default
+    )
     {
+        var type = typeof(TEntity);
+
+        // _dbContext.Add(entity);
+
+        // if (type == typeof(User))
+        //     _dbContext.Users.Update((User)entity);
+        //
+        // if (type == typeof(Book))
+        //     _dbContext.Books.Update((Book)entity);
+
         // _dbContext.Set<TEntity>()
-        _dbContext.Set<TEntity>().Update(entity);
+        DbContext.Set<TEntity>().Update(entity);
 
         if (saveChanges)
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            await DbContext.SaveChangesAsync(cancellationToken);
 
         return entity;
     }
 
-    public async ValueTask<TEntity?> DeleteAsync(TEntity entity, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<TEntity?> DeleteAsync(
+        TEntity entity,
+        bool saveChanges = true,
+        CancellationToken cancellationToken = default
+    )
     {
-        _dbContext.Set<TEntity>().Remove(entity);
+        DbContext.Set<TEntity>().Remove(entity);
 
         if (saveChanges)
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            await DbContext.SaveChangesAsync(cancellationToken);
 
         return entity;
     }
 
-    public async ValueTask<TEntity?> DeleteByIdAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<TEntity?> DeleteByIdAsync(
+        Guid id,
+        bool saveChanges = true,
+        CancellationToken cancellationToken = default
+    )
     {
-        var entity = await _dbContext.Set<TEntity>().FirstOrDefaultAsync(entity => entity.Id == id, cancellationToken) ??
+        var entity = await DbContext.Set<TEntity>().FirstOrDefaultAsync(entity => entity.Id == id, cancellationToken) ??
                      throw new InvalidOperationException();
-        
-        _dbContext.Set<TEntity>().Remove(entity);
+
+        DbContext.Set<TEntity>().Remove(entity);
 
         if (saveChanges)
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            await DbContext.SaveChangesAsync(cancellationToken);
 
         return entity;
     }

@@ -4,9 +4,7 @@ namespace N64.Identity.Application.Common.Identity.Services;
 
 public interface IAccountService
 {
-    List<User> Users { get; }
+    ValueTask<bool> VerificateAsync(string token, CancellationToken cancellationToken = default);
 
-    ValueTask<bool> VerificateAsync(string token);
-
-    ValueTask<User> CreateUserAsync(User user);
+    ValueTask<bool> CreateUserAsync(User user, CancellationToken cancellationToken = default);
 }

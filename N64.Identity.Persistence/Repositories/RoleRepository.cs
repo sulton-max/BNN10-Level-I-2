@@ -5,14 +5,14 @@ using N64.Identity.Persistence.Repositories.Interfaces;
 
 namespace N64.Identity.Persistence.Repositories;
 
-public class RoleRepository: EntityRepositoryBase<Role>, IRoleRepository
+public class RoleRepository: EntityRepositoryBase<Role, IdentityDbContext>, IRoleRepository
 {
     public RoleRepository(IdentityDbContext dbContext) : base(dbContext)
     {
     }
 
-    public IQueryable<Role> Get(Expression<Func<Role, bool>> predicate)
+    public new IQueryable<Role> Get(Expression<Func<Role, bool>>? predicate = default, bool asNoTracking = false)
     {
-        return base.Get(predicate);
+        return base.Get(predicate, asNoTracking);
     }
 }

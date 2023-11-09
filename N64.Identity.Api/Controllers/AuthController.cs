@@ -18,16 +18,14 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegistrationDetails registrationDetails)
+    public async Task<IActionResult> Register([FromBody] RegistrationDetails registrationDetails, CancellationToken cancellationToken)
     {
-        // Request.Headers.Authorization
-
-        var result = await _authService.RegisterAsync(registrationDetails);
-        return Ok(result);
+        var result = await _authService.RegisterAsync(registrationDetails, cancellationToken);
+        return result ? Ok() : BadRequest();
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginDetails loginDetails)
+    public async Task<IActionResult> Login([FromBody] LoginDetails loginDetails, CancellationToken cancellationToken)
     {
         var result = await _authService.LoginAsync(loginDetails);
         return Ok(result);
@@ -35,10 +33,10 @@ public class AuthController : ControllerBase
 
     [Authorize(Roles = "Admin")]
     [HttpPut("users/{userId:guid}/roles/{roleType}")]
-    public async ValueTask<IActionResult> GrandRole([FromRoute] Guid userId, [FromRoute] string roleType)
+    public async ValueTask<IActionResult> GrandRole([FromRoute] Guid userId, [FromRoute] string roleType, CancellationToken cancellationToken)
     {
         var actionUserId = Guid.Parse(User.Claims.First(claim => claim.Type.Equals(ClaimConstants.UserId)).Value);
-        var result = await _authService.GrandRoleAsync(userId, roleType, actionUserId);
+        var result = await _authService.GrandRoleAsync(userId, roleType, actionUserId, cancellationToken);
         return result ? Ok() : BadRequest();
     }
 }
